@@ -1,0 +1,273 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "usaquen"
+            },
+            "geometry": {
+                "coordinates": [
+                    -74.04424425163468,
+                    4.716184571820477
+                ],
+                "type": "Point"
+            },
+            "id": 0
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "prado veraniego sur"
+            },
+            "geometry": {
+                "coordinates": [
+                    -74.06434009036245,
+                    4.717335593755351
+                ],
+                "type": "Point"
+            },
+            "id": 1
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "suba"
+            },
+            "geometry": {
+                "coordinates": [
+                    -74.08489790239479,
+                    4.743578375261492
+                ],
+                "type": "Point"
+            },
+            "id": 2
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "chapinero"
+            },
+            "geometry": {
+                "coordinates": [
+                    -74.04909497132734,
+                    4.660703061232553
+                ],
+                "type": "Point"
+            },
+            "id": 3
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "barrios unidos"
+            },
+            "geometry": {
+                "coordinates": [
+                    -74.07588942296492,
+                    4.670832794026751
+                ],
+                "type": "Point"
+            },
+            "id": 4
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "engativa"
+            },
+            "geometry": {
+                "coordinates": [
+                    -74.11030643412036,
+                    4.712731494570704
+                ],
+                "type": "Point"
+            },
+            "id": 5
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "fontibon"
+            },
+            "geometry": {
+                "coordinates": [
+                    -74.13386707262875,
+                    4.678429997618849
+                ],
+                "type": "Point"
+            },
+            "id": 6
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "santafe"
+            },
+            "geometry": {
+                "coordinates": [
+                    -74.0705767299677,
+                    4.615347699066604
+                ],
+                "type": "Point"
+            },
+            "id": 7
+        },
+        {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+                "coordinates": [
+                    -74.10776558094774,
+                    4.620873381039658
+                ],
+                "type": "Point"
+            },
+            "id": 8
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "kennedy"
+            },
+            "geometry": {
+                "coordinates": [
+                    -74.15026712492444,
+                    4.635608322257497
+                ],
+                "type": "Point"
+            },
+            "id": 9
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "bosa"
+            },
+            "geometry": {
+                "coordinates": [
+                    -74.19461656211718,
+                    4.621564088258694
+                ],
+                "type": "Point"
+            },
+            "id": 10
+        },
+        {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+                "coordinates": [
+                    [
+                        -74.08512888904677,
+                        4.7431179841643
+                    ],
+                    [
+                        -74.11007544746778,
+                        4.713191905862033
+                    ],
+                    [
+                        -74.13432904593273,
+                        4.678199780538762
+                    ],
+                    [
+                        -74.15049811157644,
+                        4.635838553278532
+                    ],
+                    [
+                        -74.19484754876918,
+                        4.621333852593807
+                    ],
+                    [
+                        -74.10822755425174,
+                        4.62018267314761
+                    ],
+                    [
+                        -74.0708077166197,
+                        4.6141965099059234
+                    ],
+                    [
+                        -74.04886398467534,
+                        4.659321722714111
+                    ],
+                    [
+                        -74.07612040961693,
+                        4.6710630135272595
+                    ],
+                    [
+                        -74.04447523828671,
+                        4.715263752899034
+                    ],
+                    [
+                        -74.06410910371044,
+                        4.7164147763600965
+                    ],
+                    [
+                        -74.0839739557868,
+                        4.743578375261492
+                    ]
+                ],
+                "type": "LineString"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+                "coordinates": [
+                    [
+                        -74.0710387032723,
+                        4.6141965099059234
+                    ],
+                    [
+                        -74.07658238292095,
+                        4.670372354798957
+                    ],
+                    [
+                        -74.13317411267275,
+                        4.67750912884442
+                    ],
+                    [
+                        -74.06526403697104,
+                        4.71549395774386
+                    ]
+                ],
+                "type": "LineString"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+                "coordinates": [
+                    [
+                        -74.10961347416378,
+                        4.621103616854086
+                    ],
+                    [
+                        -74.14957416496327,
+                        4.635608322282508
+                    ]
+                ],
+                "type": "LineString"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+                "coordinates": [
+                    [
+                        -74.10661064768253,
+                        4.620873381064641
+                    ],
+                    [
+                        -74.06480206366186,
+                        4.715954367229571
+                    ]
+                ],
+                "type": "LineString"
+            }
+        }
+    ]
+}

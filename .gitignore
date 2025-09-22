@@ -1,0 +1,7 @@
+postgresql/data/*
+rabbitmq/rabbitmq_data/*
+redis/data/*
+webapi/SysTrackGps/bin
+webapi/SysTrackGps/obj
+workerconsumer/WorkerConsumer/bin
+workerconsumer/WorkerConsumer/obj

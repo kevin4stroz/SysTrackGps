@@ -1,0 +1,80 @@
+
+/* ================================================
+   Creación de Localidades con coordenadas
+   ================================================ */
+
+GRAPH.QUERY CityGraph "
+CREATE
+(:Localidad {name:'Usaquen', lat:4.716184571820477, lon:-74.04424425163468}),
+(:Localidad {name:'Prado veraniego sur', lat:4.717335593755351, lon:-74.06434009036245}),
+(:Localidad {name:'Suba', lat:4.743578375261492, lon:-74.08489790239479}),
+(:Localidad {name:'Chapinero', lat:4.660703061232553, lon:-74.04909497132734}),
+(:Localidad {name:'Barrios unidos', lat:4.670832794026751, lon:-74.07588942296492}),
+(:Localidad {name:'Engativa', lat:4.712731494570704, lon:-74.11030643412036}),
+(:Localidad {name:'Fontibon', lat:4.678429997618849, lon:-74.13386707262875}),
+(:Localidad {name:'Santafe', lat:4.615347699066604, lon:-74.0705767299677}),
+(:Localidad {name:'Puente Aranda', lat:4.620873381039658, lon:-74.10776558094774}),
+(:Localidad {name:'Kennedy', lat:4.635608322257497, lon:-74.15026712492444}),
+(:Localidad {name:'Bosa', lat:4.621564088258694, lon:-74.19461656211718})
+"
+
+/* ================================================
+   Creación de aristas bidireccionales
+   ================================================
+
+'Suba' -> ('Prado veraniego sur', 'Engativa')
+'Engativa' -> ('Fontibon', 'Suba')
+'Fontibon' -> ('Engativa', 'Kennedy', 'Prado veraniego sur', 'Barrios unidos')
+'Kennedy' -> ('Fontibon', 'Puente Aranda', 'Bosa')
+'Bosa' -> ('Kennedy', 'Puente Aranda')
+'Puente Aranda' -> ('Bosa', 'Kennedy', 'Prado veraniego sur', 'Santafe')
+'Santafe' -> ('Puente Aranda', 'Barrios unidos', 'Chapinero')
+'Chapinero' -> ('Santafe', 'Barrios unidos')
+'Barrios unidos' -> ('Chapinero', 'Santafe', 'Fontibon', 'Usaquen')
+'Usaquen' -> ( 'Barrios unidos', 'Prado veraniego sur')
+'Prado veraniego sur' -> ('Suba', 'Fontibon', 'Puente Aranda', 'Usaquen')   
+
+*/
+
+GRAPH.QUERY CityGraph "
+MATCH
+  (suba:Localidad {name:'Suba'}),
+  (prado:Localidad {name:'Prado veraniego sur'}),
+  (engativa:Localidad {name:'Engativa'}),
+  (fontibon:Localidad {name:'Fontibon'}),
+  (kennedy:Localidad {name:'Kennedy'}),
+  (bosa:Localidad {name:'Bosa'}),
+  (puente:Localidad {name:'Puente Aranda'}),
+  (santafe:Localidad {name:'Santafe'}),
+  (chapinero:Localidad {name:'Chapinero'}),
+  (barrios:Localidad {name:'Barrios unidos'}),
+  (usaquen:Localidad {name:'Usaquen'})
+CREATE
+  (suba)-[:CONNECTED]->(prado), (prado)-[:CONNECTED]->(suba),
+  (suba)-[:CONNECTED]->(engativa), (engativa)-[:CONNECTED]->(suba),
+  (engativa)-[:CONNECTED]->(fontibon), (fontibon)-[:CONNECTED]->(engativa),
+  (fontibon)-[:CONNECTED]->(kennedy), (kennedy)-[:CONNECTED]->(fontibon),
+  (fontibon)-[:CONNECTED]->(prado), (prado)-[:CONNECTED]->(fontibon),
+  (fontibon)-[:CONNECTED]->(barrios), (barrios)-[:CONNECTED]->(fontibon),
+  (kennedy)-[:CONNECTED]->(bosa), (bosa)-[:CONNECTED]->(kennedy),
+  (kennedy)-[:CONNECTED]->(puente), (puente)-[:CONNECTED]->(kennedy),
+  (bosa)-[:CONNECTED]->(puente), (puente)-[:CONNECTED]->(bosa),
+  (puente)-[:CONNECTED]->(santafe), (santafe)-[:CONNECTED]->(puente),
+  (puente)-[:CONNECTED]->(prado), (prado)-[:CONNECTED]->(puente),
+  (santafe)-[:CONNECTED]->(chapinero), (chapinero)-[:CONNECTED]->(santafe),
+  (santafe)-[:CONNECTED]->(barrios), (barrios)-[:CONNECTED]->(santafe),
+  (chapinero)-[:CONNECTED]->(barrios), (barrios)-[:CONNECTED]->(chapinero),
+  (barrios)-[:CONNECTED]->(usaquen), (usaquen)-[:CONNECTED]->(barrios),
+  (usaquen)-[:CONNECTED]->(prado), (prado)-[:CONNECTED]->(usaquen)
+"
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,84 @@
+# Definicion de red
+networks:
+  systrackgps:
+
+# Definicion de servicios
+services:
+
+  # Servicio de rabbitmq
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_systrack
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: adminPassw0rd
+    volumes:
+      # Persistencia de datos (colas, mensajes, usuarios)
+      - ./rabbitmq/rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - systrackgps
+
+  # Servicio de postgresql
+  postgresql:
+    build:
+      context: ./postgresql
+      dockerfile: Dockerfile
+    container_name: postgresql_systrack
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql/data
+    networks:
+      - systrackgps
+
+  # Servicio de redis
+  redis:
+    build:
+      context: ./redis
+      dockerfile: Dockerfile
+    container_name: redis_systrack
+    restart: always
+    ports: 
+      - "6379:6379"
+    volumes:
+      - ./redis/data:/data
+      - ./redis/init/00_init.sh:/docker-entrypoint-initdb.d/00_init.sh
+      - ./redis/init/init.sh:/entry/init.sh
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - systrackgps
+
+  # Servicio de web api
+  webapi:
+    build:
+      context: ./webapi
+      dockerfile: Dockerfile
+    container_name: webapi_systrack
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgresql
+      - redis
+      - rabbitmq
+    networks:
+      - systrackgps
+
+  # Servicio de worker-consumer
+  workerconsumer:
+    build:
+      context: ./workerconsumer
+      dockerfile: Dockerfile
+    container_name: worker_consumer_systrack
+    restart: always
+    depends_on:
+      - postgresql
+      - redis
+      - rabbitmq
+    networks:
+      - systrackgps
