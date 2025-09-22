@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Arrancar Redis en modo daemon temporal para que los scripts puedan conectarse
-redis-server /usr/local/etc/redis/redis.conf
+redis-server /usr/local/etc/redis/redis.conf --daemonize yes
 
 # Esperar a que Redis esté listo
 REDIS_CLI="redis-cli -a C3JbTQR3zB82zogUKN"
