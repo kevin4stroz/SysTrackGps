@@ -2,22 +2,52 @@
 
 ![](./Grafo_Mock.png)
 
-Para este ejercicio se planteo el siguente grafo mock, el cual tiene 11 puntos, de 11 localidades, estas localidades se asociaron por medio de las rutas visibles en la grafica. Este mock de modelo en redis usando RedisGraph, cada una de las aristas del grafo son bidirecionales y la distancia(peso para la heuristica de la implemantacion de A*) se calcula por medio de la latitud y longitud obtenida de los puntos. se uso la herramienta https://geojson.io/ para modelar esto y poder obtener algunos datos reales.
+Para este ejercicio se planteó el siguiente grafo mock, el cual tiene 11 nodos correspondientes a 11 localidades. Estas localidades se asociaron mediante las rutas visibles en la gráfica. Este modelo mock se implementó en Redis utilizando RedisGraph; cada una de las aristas del grafo es bidireccional y la distancia (peso para la heurística de la implementación de A*) se calcula a partir de la latitud y longitud de los puntos. Se utilizó la herramienta https://geojson.io/
+ para modelar los datos y obtener coordenadas reales.
 
-El ejercicio consta de un vehiculo (o N dependiendo de los que se parametricen en el sistema o se agreguen por medio del endpoint), podra definir un punto de origen y un punto de destino. la implementacion realizara el calculo de la ruta optima usando A* (tene en cuenta que no estamos usando calles si no la linea que une de los puntos), esta ruta optima sera cacheada en redis y almacenada de manera transaccional en postgresql. Una vez el vehiculo seleccione la ruta, se habilitara el endpoint que recibe coordenadas, cada una de estas coordenadas seran almacenadas tanto en postgresql como redis, este proceso de almacenamiento se realizo usando rabbitmq para asegurar que si alguna de las dos bases de datos no responde, el mensaje quedara guardado en rabbitmq hasta que el almacenamiento se de en ambas partes. 
+El ejercicio contempla uno o varios vehículos (dependiendo de los que se parametricen en el sistema o se agreguen mediante el endpoint). Cada vehículo podrá definir un punto de origen y un punto de destino. La implementación calcula la ruta óptima usando el algoritmo A* (teniendo en cuenta que no se usan calles, sino la línea que une los puntos). Esta ruta óptima se almacena en caché en Redis y se guarda de manera transaccional en PostgreSQL.
 
-Tambien manejamos 3 posibles estados para un vehiculo. cuando recien se crea el vehiculo queda en esta DISPONIBLE (puede iniciar viajes), cuando esta recorriendo el viaje esta en estado EN CURSO (en proceso de envio de coordenadas), cuando termina el viaje queda DISPONIBLE DE NUEVO (el terminar en viaje es que envie una posicion de alrededor de 50 metros a la posicion destino) y un estado NO DISPONIBLE (se parametrizo pero no se uso a lo largo de la implementacion).
+Una vez que el vehículo seleccione la ruta, se habilitará un endpoint que recibe coordenadas; cada una de estas coordenadas se almacenará tanto en PostgreSQL como en Redis. Este proceso de almacenamiento se realiza mediante RabbitMQ para garantizar que, si alguna de las dos bases de datos no responde, el mensaje quede guardado en RabbitMQ hasta que se complete el almacenamiento en ambas partes.
 
-Para el manejo de auditoria se almacenan y se controlan los errores dados dentro de la aplicacion.
+Asimismo, se manejan tres posibles estados para un vehículo:
+
+DISPONIBLE: Estado inicial al crear el vehículo; puede iniciar viajes.
+
+EN CURSO: Estado mientras el vehículo está recorriendo la ruta y enviando coordenadas.
+
+DISPONIBLE DE NUEVO: Estado al finalizar el viaje (cuando el vehículo envía una posición a aproximadamente 50 metros del destino).
+
+NO DISPONIBLE: Estado parametrizado pero no utilizado en la implementación actual.
+
+Finalmente, para el manejo de auditoría, se registran y controlan los errores generados dentro de la aplicación.
 
 # comandos de despliegue
 
-El despliegue se realizo usando docker compose, cada uno de los servicios quedo configurado con scripts de inicializacion para asegurar que los datos necesarios para la primera ejecucion queden almacenados dentro de cada contendor y su respectivo almacenamiento en el host.
+El despliegue se realizó utilizando Docker Compose. Cada uno de los servicios quedó configurado con scripts de inicialización para garantizar que los datos necesarios para la primera ejecución se almacenen correctamente tanto dentro de cada contenedor como en el almacenamiento del host.
 
 ```
 git clone [repo]
 cd SysTrackGps
 docker compose up -d
+```
+
+# Strings de conexion
+
+```
+"ConnectionStrings": {
+    "PostgresqlConnection": "Host=localhost;Port=5432;Database=SysTrackGps;Username=admin_prueba_tecnica;Password=l4tQmS5pv89IggWQTfJ",
+    "Redis": "localhost:6379,user=default,password=C3JbTQR3zB82zogUKN"
+},
+"RabbitMq": {
+    "UserName": "admin",
+    "Password": "adminPassw0rd",
+    "VirtualHost": "/",
+    "HostName": "",
+    "Port": "5672",
+    "Url": "amqps://localhost:5672",
+    "QueueName": "",
+    "ExchangeName": "SysTrackGps.Exchange"
+}
 ```
 
 # Base de datos
@@ -26,12 +56,12 @@ docker compose up -d
 
 ![](./Mer.png)
 
-- `public.error_log` : tabla de auditoria de errores controlados
-- `public.vehiculo` : tabla de almacemiento de metadata de vehiculo
-- `public.vehiculo_status` : tabla de datos maestros de estados del vehiculo
-- `public.vehiculo_vehiculo_status` : tabla de asociacion de vehiculos y estados
-- `public.vehiculo_viaje` : tabla de almacenamiento de viaje o ruta, aqui se guarda el origen y destino y la key de consulta para redis
-- `public.posicion_actual_viaje` : tabla de almacenamiento de coordenadas de posicion del vehiculo
+- `public.error_log`: tabla de auditoría de errores controlados.
+- `public.vehiculo` : tabla de almacenamiento de la metadata de los vehículos.
+- `public.vehiculo_status` : tabla de datos maestros con los posibles estados de los vehículos.
+- `public.vehiculo_vehiculo_status` : tabla de asociación entre vehículos y estados.
+- `public.vehiculo_viaje` : tabla de almacenamiento de viajes o rutas; aquí se guarda el origen, el destino y la clave de consulta para Redis.
+- `public.posicion_actual_viaje` : tabla de almacenamiento de las coordenadas actuales de los vehículos durante el viaje.
 
 ## Redis grafo
 
