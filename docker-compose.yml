@@ -47,8 +47,6 @@ services:
       - "6379:6379"
     volumes:
       - ./redis/data:/data
-      - ./redis/init/00_init.sh:/docker-entrypoint-initdb.d/00_init.sh
-      - ./redis/init/init.sh:/entry/init.sh
       - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
     networks:
       - systrackgps
